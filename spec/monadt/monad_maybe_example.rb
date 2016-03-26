@@ -3,17 +3,16 @@ require 'monadt'
 module Monadt
   class MaybeExample
     class << self
-      include Maybe
 
       def may1(x)
-        Just.new x
+        Maybe.just x
       end
 
       def may2(z)
         if z > 0
-          Just.new (z * 2)
+          Maybe.just (z * 2)
         else
-          Nothing.new
+          Maybe.nothing
         end
       end
 

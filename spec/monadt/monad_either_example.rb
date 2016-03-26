@@ -6,17 +6,17 @@ module Monadt
 
       def choose1(x)
         if x > 5
-          Either::Right.new (x - 5)
+          Either.right (x - 5)
         else
-          Either::Left.new "less than 5"
+          Either.left "less than 5"
         end
       end
 
       def choose2(z)
         if z % 2 == 0
-          Either::Right.new (z * 2)
+          Either.right (z * 2)
         else
-          Either::Left.new "i need even numbers"
+          Either.left "i need even numbers"
         end
       end
 

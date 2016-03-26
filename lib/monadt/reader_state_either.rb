@@ -1,7 +1,7 @@
 require 'monadt/adt'
 
 module Monadt
-  class ReaderStateEitherM
+  class ReaderStateEither
     class << self
       include Adt
 
@@ -17,7 +17,7 @@ module Monadt
       end
 
       def return(val)
-        ->(e, s) { [EitherM.return(val), s] }
+        ->(e, s) { [Either.return(val), s] }
       end
     end
   end

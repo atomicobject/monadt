@@ -10,10 +10,10 @@ module Monadt
     def unpack(base, language, state)
       modded = state.first % base
       if (modded > 5)
-        [Either::Left.new('too big'), state.rest]
+        [Either.left('too big'), state.rest]
       else
         v = Lang.send(language)[modded]
-        [Either::Right.new(v), state.rest]
+        [Either.right(v), state.rest]
       end
     end
 

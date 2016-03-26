@@ -1,38 +1,28 @@
 require 'monadt/adt'
 
 module Monadt
-  module Maybe
+  class Maybe
     Just = data :value
     Nothing = data
-  end
 
-  class Maybe::Just
-    def is_nothing?() false end
-    def to_s() "Just #{value}" end
-  end
-  class Maybe::Nothing
-    def is_nothing?() true end
-    def to_s() "Nothing" end
-  end
-
-  class MaybeM
     class << self
       include Adt
 
       def bind(m, &blk)
         match(m,
-          with(Maybe::Just) { |v| blk.call(v) },
-          with(Maybe::Nothing) { m })
+          with(Just) { |v| blk.call(v) },
+          with(Nothing) { m })
       end
 
       def return(a)
-        Maybe::Just.new a
+        Maybe.just a
       end
     end
   end
+  decorate_adt Maybe
 
   # like Maybe but nil / not-nill
-  class PresentM
+  class Present
     class << self
       def bind(m, &blk)
         if m.nil?

@@ -1,5 +1,5 @@
 module Monadt
-  class StateM
+  class State
     class << self
       def bind(m, &blk)
         ->(st) {

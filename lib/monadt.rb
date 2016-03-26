@@ -8,19 +8,19 @@ module Monadt
   class Monad
     class << self
       def maybe(&blk)
-        do_m(MaybeM, &blk)
+        do_m(Maybe, &blk)
       end
 
       def present(&blk)
-        do_m(PresentM, &blk)
+        do_m(Present, &blk)
       end
 
       def either(&blk)
-        do_m(EitherM, &blk)
+        do_m(Either, &blk)
       end
 
       def state(&blk)
-        do_m(StateM, &blk)
+        do_m(State, &blk)
       end
 
       def run_state(initial_state, &blk)
@@ -29,7 +29,7 @@ module Monadt
       end
 
       def reader(&blk)
-        do_m(ReaderM, &blk)
+        do_m(Reader, &blk)
       end
 
       def run_reader(env, &blk)
@@ -37,7 +37,7 @@ module Monadt
       end
 
       def reader_state_choice(&blk)
-        do_m(ReaderStateEitherM, &blk)
+        do_m(ReaderStateEither, &blk)
       end
 
       def run_reader_state_choice(env, initial_state, &blk)
