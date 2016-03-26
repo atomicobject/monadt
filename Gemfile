@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gem 'pry'
+gem 'funkify'
+gem 'piece_pipe'
+gem 'mocha'
+gem 'factory_girl'
+gem 'hamsterdam'
+gem 'hamster', '0.4.3'
+gem 'rspec'
