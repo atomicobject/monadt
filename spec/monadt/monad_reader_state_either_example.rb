@@ -10,10 +10,10 @@ module Monadt
     def unpack(base, language, state)
       modded = state.first % base
       if (modded > 5)
-        [Either.right('too big'), state.rest]
+        [Either::Left.new('too big'), state.rest]
       else
         v = Lang.send(language)[modded]
-        [Either.left(v), state.rest]
+        [Either::Right.new(v), state.rest]
       end
     end
 
@@ -23,7 +23,7 @@ module Monadt
     class << self
       def state_func(language, bytes)
         sf = ReaderStateEitherFuncs.new
-        Monad.reader_state_choice(language, bytes) do |m|
+        Monad.run_reader_state_choice(language, bytes) do |m|
           x = m.bind (sf.unpack 4)
           y = m.bind (sf.unpack 9)
           z = m.bind (sf.unpack 3)

@@ -11,6 +11,7 @@
 /tmp/
 
 .*.sw*
+tags
 
 ## Specific to RubyMotion:
 .dat*

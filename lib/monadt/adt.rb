@@ -16,7 +16,13 @@ module Adt
     m = cases.find do |tpl|
       tpl.klass == o.class || tpl.klass == Default
     end
-    m.lambda.call(*(o.values.take(m.lambda.arity)))
+    params =
+      if m.lambda.arity > 0
+        o.values.take(m.lambda.arity)
+      else
+        []
+      end
+    m.lambda.call(*params)
   end
 
   def with(klass, prc=nil, &blk)

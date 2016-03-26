@@ -22,7 +22,7 @@ module Monadt
       end
 
       def list_func(v)
-        Monad.doM(List) do |m|
+        Monad.do_m(List) do |m|
           x = m.bind (list1 v)
           y = m.bind (list2 x)
           List.return (x + y)

@@ -1,8 +1,6 @@
 module Monadt
-  class State
+  class StateM
     class << self
-      # m : s -> v * s
-      # blk : v -> (s -> u * s')
       def bind(m, &blk)
         ->(st) {
           v, s = m.(st)

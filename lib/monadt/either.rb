@@ -1,41 +1,33 @@
+require 'monadt/adt'
+
 module Monadt
-  class Either
-    attr_reader :left, :right, :is_left
+  module Either
+    Left = data :left
+    Right = data :right
+  end
+  class Either::Left
+    def is_left?() true end
+    def is_right?() false end
+    def to_s() "Left(#{left})" end
+  end
+  class Either::Right
+    def is_left?() false end
+    def is_right?() true end
+    def to_s() "Right(#{right})" end
+  end
 
-    def to_s
-      if is_left
-        "left: #{left}"
-      else
-        "right: #{right}"
-      end
-    end
-
-    private
-    def initialize(is_left, left_value, right_value)
-      @is_left = is_left
-      @left = left_value
-      @right = right_value
-    end
-
+  class EitherM
     class << self
-      def left(val)
-        Either.new true, val, nil
-      end
-
-      def right(val)
-        Either.new false, nil, val
-      end
+      include Adt
 
       def bind(m, &blk)
-        if !m.is_left
-          m
-        else
-          blk.call(m.left)
-        end
+        match(m,
+          with(Either::Left) { |v| m },
+          with(Either::Right) { |v| blk.call(v) })
       end
 
       def return(a)
-        left a
+        Either::Right.new a
       end
     end
 

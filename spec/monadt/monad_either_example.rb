@@ -6,19 +6,18 @@ module Monadt
     class << self
 
       def choose1(x)
-        #Either.failure "no"
         if x > 5
-          Either.left(x - 5)
+          Either::Right.new (x - 5)
         else
-          Either.right "less than 5"
+          Either::Left.new "less than 5"
         end
       end
 
       def choose2(z)
         if z % 2 == 0
-          Either.left (z * 2)
+          Either::Right.new (z * 2)
         else
-          Either.right "i need even numbers"
+          Either::Left.new "i need even numbers"
         end
       end
 

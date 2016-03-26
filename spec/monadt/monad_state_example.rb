@@ -22,7 +22,7 @@ module Monadt
     class << self
       def state_func(bytes)
         sf = StateFuncs.new
-        Monad.state(bytes) do |m|
+        Monad.run_state(bytes) do |m|
           a = m.bind (sf.unpack_english 4)
           b = m.bind (sf.unpack_english 6)
           c = m.bind (sf.unpack_spanish 5)

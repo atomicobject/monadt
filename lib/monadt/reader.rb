@@ -1,5 +1,5 @@
 module Monadt
-  class Reader
+  class ReaderM
     class << self
       def bind(m, &blk)
         ->(e) {

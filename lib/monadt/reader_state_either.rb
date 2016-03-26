@@ -1,19 +1,23 @@
+require 'monadt/adt'
+
 module Monadt
-  class ReaderStateEither
+  class ReaderStateEitherM
     class << self
+      include Adt
+
       def bind(m, &blk)
         ->(e, s) {
-          v, s2 = m.(e, s)
-          if v.is_left
-            blk.call(v.left).(e, s2)
-          else
-            [v, s2]
-          end
+          c, s2 = m.(e, s)
+          match(c,
+            with(Either::Left) {|v| [c, s2]},
+            with(Either::Right) {|v|
+              blk.call(v).(e, s2)
+            })
         }
       end
 
       def return(val)
-        ->(e, s) { [Either.return(val), s] }
+        ->(e, s) { [EitherM.return(val), s] }
       end
     end
   end
