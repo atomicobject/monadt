@@ -1,5 +1,4 @@
-require 'monadt/maybe'
-require 'monadt/monad'
+require 'monadt'
 
 module Monadt
   class MaybeExample

@@ -1,5 +1,4 @@
-require 'monadt/either'
-require 'monadt/monad'
+require 'monadt'
 
 module Monadt
   class EitherExample

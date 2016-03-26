@@ -1,5 +1,5 @@
 require 'funkify'
-require 'monadt/monad'
+require 'monadt'
 require 'util'
 
 module Monadt

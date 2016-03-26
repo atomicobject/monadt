@@ -1,10 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'pry'
-gem 'funkify'
-gem 'piece_pipe'
-gem 'mocha'
-gem 'factory_girl'
-gem 'hamsterdam'
-gem 'hamster', '0.4.3'
-gem 'rspec'
+group :development, :test do
+  gem 'pry', '0.10.1'
+  gem 'funkify', '0.0.4'
+  gem 'rspec', '3.4.0'
+end
