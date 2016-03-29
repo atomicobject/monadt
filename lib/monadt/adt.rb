@@ -1,4 +1,4 @@
-require 'pry'
+require 'active_support/inflector'
 
 AdtPattern = Struct.new :klass, :lambda
 
@@ -13,10 +13,10 @@ end
 
 def decorate_adt(klass)
   klass.constants.each do |v|
-    name = v.to_s.downcase
+    name = v.to_s.underscore
     const = klass.const_get v
     klass.constants.each do |is_v|
-      is_name = is_v.to_s.downcase
+      is_name = is_v.to_s.underscore
       ret = is_v == v
       const.class_eval do
         define_method "is_#{is_name}?" do ret end

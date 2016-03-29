@@ -1,9 +1,11 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    activesupport-inflector (0.1.0)
     coderay (1.1.0)
     diff-lcs (1.2.5)
     funkify (0.0.4)
+    i18n (0.7.0)
     method_source (0.8.2)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -28,7 +30,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport-inflector (= 0.1.0)
   funkify (= 0.0.4)
+  i18n (= 0.7.0)
   pry (= 0.10.1)
   rspec (= 3.4.0)
 
