@@ -45,6 +45,13 @@ To declare a new value use the class constructor:
 MyAdt::FooBar.new 15
 ```
 
+If you need to access the fields directly rather than with pattern matching, you can use the name associated with the data. For example,
+```ruby
+adt_value.a_number
+adt_value.second_data_point
+```
+You will trigger a NoMethodError if you call a data field for the wrong case.
+
 You can optionally add several useful helper functions to your ADT by calling
 ```ruby
 decorate_adt MyAdt
@@ -64,5 +71,9 @@ adt_value.to_s # sensible defaults like "FooBar(11)", "Baz", "Else(34, 99)"
 ```
 
 Decorating your ADTs is optional because you may not want all those helpers, and because I'm sure there is some class name transform case I didn't think of that will break everything in certain edge cases.
+
+### TODO 
+
+Make it easy to enforce immutability.
 
 ## Monads
