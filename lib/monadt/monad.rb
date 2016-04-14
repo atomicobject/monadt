@@ -23,7 +23,11 @@ module Monadt
           m_obj = Internal::MonadObj.new klass, y
           blk.call(m_obj)
         end
-        do_m_recur(klass, e)
+        if klass.respond_to? :do_m
+          klass.do_m(e)
+        else
+          do_m_recur(klass, e)
+        end
       end
 
       def do_m_recur(klass, e)
