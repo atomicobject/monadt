@@ -2,11 +2,11 @@ require 'monadt'
 require 'monadt/list'
 require 'funkify'
 require 'pry'
+require 'memoist'
 
 class ListFuncs
-  include Funkify
+  extend Memoist
 
-  auto_curry
   def list1(x)
     #Choice.failure "no"
     if x > 5
@@ -15,8 +15,8 @@ class ListFuncs
       [x, x + 2]
     end
   end
+  memoize :list1
 
-  auto_curry
   def list2(z)
     if z % 2 == 0
       [z, z / 2]
@@ -24,11 +24,12 @@ class ListFuncs
       [z, z * 2]
     end
   end
+  memoize :list2
 
-  auto_curry
   def add(x,y)
     x + y
   end
+  memoize :add
 end
 
 module Monadt
