@@ -1,8 +1,9 @@
+require 'fiber'
+
 module Monadt
   module Internal
     class MonadObj
-      def initialize(klass, yielder)
-        @yielder = yielder
+      def initialize(klass)
         @klass = klass
       end
 
@@ -11,7 +12,7 @@ module Monadt
       end
 
       def bind(val)
-        @yielder.yield val
+        Fiber.yield val
       end
     end
   end
@@ -19,22 +20,21 @@ module Monadt
   class Monad
     class << self
       def do_m(klass, &blk)
-        e = Enumerator.new do |y|
-          m_obj = Internal::MonadObj.new klass, y
+        f = Fiber.new do |y|
+          m_obj = Internal::MonadObj.new klass
           blk.call(m_obj)
         end
-        do_m_recur(klass, e)
+        do_m_recur(klass, f, nil)
       end
 
-      def do_m_recur(klass, e)
-        begin
-          ma = e.next
-        rescue StopIteration => ex
-          return ex.result
-        end
-        klass.bind(ma) do |a|
-          e.feed a
-          do_m_recur(klass, e)
+      def do_m_recur(klass, f, ma, *args)
+        if f.alive?
+          ma = f.resume(*args)
+          klass.bind(ma) do |a|
+            do_m_recur(klass, f, ma, a)
+          end
+        else
+          ma
         end
       end
     end
