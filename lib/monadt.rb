@@ -1,6 +1,8 @@
 require 'monadt/maybe'
 require 'monadt/either'
+require 'monadt/async'
 require 'monadt/state'
+require 'monadt/async_either'
 require 'monadt/reader_state_either'
 require 'monadt/monad'
 
@@ -17,6 +19,14 @@ module Monadt
 
       def either(&blk)
         do_m(Either, &blk)
+      end
+
+      def async(&blk)
+        do_m(Async, &blk)
+      end
+
+      def async_either(&blk)
+        do_m(AsyncEither, &blk)
       end
 
       def state(&blk)
