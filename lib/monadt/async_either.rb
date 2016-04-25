@@ -1,6 +1,5 @@
 require 'monadt/adt'
 require 'monadt/either'
-require 'pry'
 
 module Monadt
   class AsyncEither

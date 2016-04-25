@@ -6,7 +6,6 @@ describe 'async either monad' do
     result = Monadt::AsyncEitherExample.async_func_works().resume
     expect(result.is_right?).to be true
     expect(result.right).to eq({bar: 'baz'})
-
   end
 
   it 'stops early' do
