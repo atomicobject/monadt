@@ -5,7 +5,13 @@ module Monadt
     class << self
 
       def bind(m, &blk)
-        blk.call(m.resume)
+        a = m.resume
+        m2 = blk.call(a)
+        if m2.alive?
+          m2
+        else
+          self.return a
+        end
       end
 
       def return(a)

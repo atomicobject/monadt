@@ -12,9 +12,7 @@ module Monadt
       end
 
       def bind(val)
-        binding.pry
         Fiber.yield val
-        binding.pry
       end
     end
 

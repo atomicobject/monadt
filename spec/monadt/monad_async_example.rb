@@ -21,7 +21,8 @@ module Monadt
         Monad.async do |m|
           x = m.bind (async1 v)
           y = m.bind (async2 x, v)
-          m.return (x + y)
+          ret = m.return (x + y)
+          ret
         end
       end
     end

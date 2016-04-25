@@ -8,14 +8,17 @@ module Monadt
       include Adt
 
       def bind(m, &blk)
-        binding.pry
         a = m.resume
         match(a,
-          with(Either::Left) { |v| m },
+          with(Either::Left) { |v| Async.return a },
           with(Either::Right) { |v|
-            binding.pry
-            blk.call(v)
-        })
+            m2 = blk.call(v)
+            if m2.alive?
+              m2
+            else
+              Async.return a
+            end
+          })
       end
 
       def return(a)

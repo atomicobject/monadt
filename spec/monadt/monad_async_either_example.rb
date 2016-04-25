@@ -21,9 +21,8 @@ module Monadt
       end
 
       def async_func_works()
-        Monad.async do |m|
+        Monad.async_either do |m|
           test = m.bind (get_url "www.test.com")
-          binding.pry
           another = m.bind (get_url "www.another.com/#{test[:hello]}")
           data = m.bind (get_url "www.test.com/#{another[:get]}")
           m.return data
@@ -33,7 +32,6 @@ module Monadt
       def async_func_short_circuit()
         Monad.async_either do |m|
           test = m.bind (get_url "www.test.com")
-          binding.pry
           another = m.bind (get_url "www.fail.com/#{test[:hello]}")
           raise "NO"
           data = m.bind (get_url "www.test.com/#{another[:get]}")
