@@ -1,4 +1,4 @@
-require 'monadt/monad'
+require 'monadt/do_m'
 
 module Monadt
   class ListExample

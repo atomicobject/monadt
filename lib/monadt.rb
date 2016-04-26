@@ -4,7 +4,7 @@ require 'monadt/async'
 require 'monadt/state'
 require 'monadt/async_either'
 require 'monadt/reader_state_either'
-require 'monadt/monad'
+require 'monadt/do_m'
 
 module Monadt
   class Monad
