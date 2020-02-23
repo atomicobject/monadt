@@ -2,8 +2,8 @@ require 'monadt/adt'
 
 module Monadt
   class Either
-    Left = data :left
-    Right = data :right
+    Left = data :left, key_struct: false
+    Right = data :right, key_struct: false
 
     class << self
       include Adt
