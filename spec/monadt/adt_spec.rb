@@ -1,35 +1,46 @@
 require 'monadt/adt'
 
-class TestAdt
-  One = data :foo, :bar
-  Two = data :foo
-  AndThree = data
+# Proof of concept for modeling Business Domain with Nil/Null or Optional based on F# union types
+#
+# type RegistrationFlow =
+#   | Accepted of confirmation_number: int
+#   | CourseFull
+#   | WaitingList if spot: int
+#
+# Example contract of method which depends on this type:
+#
+# let registerForCourse (course: Course) : RegistrationFlow = ...
+
+class RegistrationFlow
+  Accepted = data :confirmation_number, :full_name
+  CourseFull = data
+  WaitingList = data :spot
 end
 
-decorate_adt TestAdt
+decorate_adt RegistrationFlow
 
 class UseAdts
   include Adt
 
   def adt_func(o)
     match o,
-      with(TestAdt::One, ->(foo, bar) { foo.to_s + bar.to_s }),
-      with(TestAdt::AndThree, ->() { 10 }),
+      with(RegistrationFlow::Accepted, ->(confirmation_number:, full_name:) { confirmation_number.to_s + full_name.to_s }),
+      with(RegistrationFlow::CourseFull, ->() { 10 }),
       with(Default, ->() { "default" })
   end
 
   def adt_func2(o)
     match o,
-      with(TestAdt::One) { |foo, bar| foo.to_s + bar.to_s },
-      with(TestAdt::AndThree) { 10 },
+      with(RegistrationFlow::Accepted) { |confirmation_number:, full_name:| confirmation_number.to_s + full_name.to_s },
+      with(RegistrationFlow::CourseFull) { 10 },
       with(Default) { "default" }
   end
 end
 
 describe 'Algebraic Data Types' do
-  let(:v1) { TestAdt.one 1, :five }
-  let(:v2) { TestAdt.two "hoi" }
-  let(:v3) { TestAdt.and_three }
+  let(:v1) { RegistrationFlow.accepted confirmation_number: 1, full_name: :five }
+  let(:v2) { RegistrationFlow.waiting_list spot: "hoi" }
+  let(:v3) { RegistrationFlow.course_full }
   let(:subject) { UseAdts.new }
 
   describe 'proc/block based ADTs' do
@@ -49,20 +60,20 @@ describe 'Algebraic Data Types' do
 
   describe "decorate ADTs" do
     it 'supports blocks' do
-      expect(v1.is_one?).to be true
-      expect(v1.is_two?).to be false
-      expect(v1.is_and_three?).to be false
-      expect(v1.to_s).to eq("One(1, five)")
+      expect(v1.is_accepted?).to be true
+      expect(v1.is_waiting_list?).to be false
+      expect(v1.is_course_full?).to be false
+      expect(v1.to_s).to eq("Accepted(1, five)")
 
-      expect(v2.is_one?).to be false
-      expect(v2.is_two?).to be true
-      expect(v2.is_and_three?).to be false
-      expect(v2.to_s).to eq("Two(hoi)")
+      expect(v2.is_accepted?).to be false
+      expect(v2.is_waiting_list?).to be true
+      expect(v2.is_course_full?).to be false
+      expect(v2.to_s).to eq("WaitingList(hoi)")
 
-      expect(v3.is_one?).to be false
-      expect(v3.is_two?).to be false
-      expect(v3.is_and_three?).to be true
-      expect(v3.to_s).to eq("AndThree")
+      expect(v3.is_accepted?).to be false
+      expect(v3.is_waiting_list?).to be false
+      expect(v3.is_course_full?).to be true
+      expect(v3.to_s).to eq("CourseFull")
     end
   end
 end

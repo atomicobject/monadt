@@ -2,8 +2,8 @@ require 'monadt/adt'
 
 module Monadt
   class Maybe
-    Just = data :value
-    Nothing = data
+    Just = data :value, key_struct: false
+    Nothing = data key_struct: false
 
     class << self
       include Adt
